@@ -5,12 +5,12 @@ fromCodePoint = function () {var stringFromCharCode = String.fromCharCode;var fl
  * 加密
  */
 encrypt = function (msg, key, options) {
-    return sm4.encrypt(msg, key, 1, options)
+    return sm4.encrypt(msg, key, options)
 }
 
 /**
  * 解密
  */
 decrypt = function (encryptData, key, options) {
-    return sm4.decrypt(encryptData, key, 0, options)
+    return sm4.decrypt(encryptData, key, options)
 }
