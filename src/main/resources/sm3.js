@@ -3,6 +3,9 @@ sm3=function(r){function n(e){if(t[e])return t[e].exports;var o=t[e]={i:e,l:!1,e
 /**
  * 杂凑
  */
-constructSm3 = function (msg) {
+constructSm3 = function (msg, options) {
+    options = options || {};
+    // 如果提供了key，可以在未来扩展支持HMAC-SM3
+    // 当前保持与原有行为一致
     return sm3(msg)
 }
