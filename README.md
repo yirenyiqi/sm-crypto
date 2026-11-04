@@ -44,10 +44,15 @@ String decryptData = Sm2.doDecrypt(encryptData, privateKey); // 解密结果
 String sigValueHex = Sm2.doSignature(msg, privateKey); // 签名
 boolean verifyResult = Sm2.doVerifySignature(msg, sigValueHex, publicKey); // 验签结果
 
-// 纯签名
-Queue<Point> pointPool = new LinkedList(Arrays.asList(Sm2.getPoint(), Sm2.getPoint(), Sm2.getPoint(), Sm2.getPoint()));
+// 使用预生成点池优化性能（推荐）
 SignatureOptions signatureOptions2 = new SignatureOptions();
-signatureOptions2.setPointPool(pointPool); // 传入事先已生成好的椭圆曲线点，可加快签名速度
+signatureOptions2.setPointPool(PointPoolManager.getDefaultPool()); // 使用默认点池，显著提升签名速度
+String sigValueHex2 = Sm2.doSignature(msg, privateKey, signatureOptions2);
+
+// 或手动创建点池
+Queue<Point> pointPool = new LinkedList(Arrays.asList(Sm2.getPoint(), Sm2.getPoint(), Sm2.getPoint(), Sm2.getPoint()));
+SignatureOptions signatureOptions3 = new SignatureOptions();
+signatureOptions3.setPointPool(pointPool);
 String sigValueHex2 = Sm2.doSignature(msg, privateKey, signatureOptions2);
 boolean verifyResult2 = Sm2.doVerifySignature(msg, sigValueHex2, publicKey); // 验签结果
 
